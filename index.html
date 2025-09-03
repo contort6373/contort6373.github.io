@@ -1,1 +1,83 @@
-hello
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Films</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+    /* Colonne de gauche */
+    #movie-list {
+      width: 200px;
+      background: #f0f0f0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #movie-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    #movie-list li {
+      margin: 10px 0;
+      cursor: pointer;
+      color: #007bff;
+    }
+    #movie-list li:hover {
+      text-decoration: underline;
+    }
+
+    /* Colonne de droite */
+    #movie-detail {
+      flex-grow: 1;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Liste des films -->
+  <div id="movie-list">
+    <ul>
+      <li onclick="showDetail('inception')">Inception</li>
+      <li onclick="showDetail('matrix')">Matrix</li>
+      <li onclick="showDetail('parasite')">Parasite</li>
+    </ul>
+  </div>
+
+  <!-- Détails -->
+  <div id="movie-detail">
+    <h2>Sélectionnez un film</h2>
+    <p>Le détail du film apparaîtra ici.</p>
+  </div>
+
+  <script>
+    const movieDetails = {
+      inception: {
+        title: "Inception",
+        description: "Un voleur capable de pénétrer dans les rêves des gens se voit confier une mission extraordinaire."
+      },
+      matrix: {
+        title: "Matrix",
+        description: "Un hacker découvre que la réalité n'est qu'une simulation et se bat pour libérer l'humanité."
+      },
+      parasite: {
+        title: "Parasite",
+        description: "Une famille pauvre s'infiltre dans la vie d'une famille riche avec des conséquences inattendues."
+      }
+    };
+
+    function showDetail(movieKey) {
+      const detail = movieDetails[movieKey];
+      const container = document.getElementById('movie-detail');
+      container.innerHTML = `
+        <h2>${detail.title}</h2>
+        <p>${detail.description}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
