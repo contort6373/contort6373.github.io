@@ -2,35 +2,40 @@
   {
     "id": "film1",
     "title": "Au sein du monde",
-    "duration": "92 min",
+    "annee" : "2018",
+    "duration": "25 min",
     "synopsis": "XXX",
     "images": ["images/film1-1.jpg", "images/film1-2.jpg"]
   },
   {
     "id": "film2",
     "title": "Vagabonds",
-    "duration": "87 min",
+    "annee" : "2019",
+    "duration": "15 min",
     "synopsis": "XXX",
     "images": ["images/film2-1.jpg"]
   },
   {
     "id": "film3",
     "title": "Sous le vieux châtaignier",
-    "duration": "95 min",
+    "annee" : "2022",
+    "duration": "20 min",
     "synopsis": "XXX",
     "images": ["images/film3-1.jpg"]
   },
   {
     "id": "film4",
     "title": "Village club",
-    "duration": "90 min",
+    "annee" : "2024",
+    "duration": "18 min",
     "synopsis": "XXX",
     "images": ["images/film4-1.jpg"]
   },
   {
     "id": "film5",
     "title": "Je regarde",
-    "duration": "80 min",
+    "annee" : "2025",
+    "duration": "95 min",
     "synopsis": "XXX",
     "images": ["images/film5-1.jpg"]
   }
