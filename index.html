@@ -45,7 +45,7 @@
       tbody.innerHTML = "";
       films.forEach(film => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${film.title}</td><td>${film.duration}</td>`;
+        tr.innerHTML = `<td>${film.title}</td><td>${film.annee}</td><td>${film.duration}</td>`;
         tr.onclick = () => showDetail(film.id);
         tbody.appendChild(tr);
       });
