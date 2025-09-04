@@ -1,0 +1,37 @@
+[
+  {
+    "id": "film1",
+    "title": "Au sein du monde",
+    "duration": "92 min",
+    "synopsis": "XXX",
+    "images": ["images/film1-1.jpg", "images/film1-2.jpg"]
+  },
+  {
+    "id": "film2",
+    "title": "Vagabonds",
+    "duration": "87 min",
+    "synopsis": "XXX",
+    "images": ["images/film2-1.jpg"]
+  },
+  {
+    "id": "film3",
+    "title": "Sous le vieux châtaignier",
+    "duration": "95 min",
+    "synopsis": "XXX",
+    "images": ["images/film3-1.jpg"]
+  },
+  {
+    "id": "film4",
+    "title": "Village club",
+    "duration": "90 min",
+    "synopsis": "XXX",
+    "images": ["images/film4-1.jpg"]
+  },
+  {
+    "id": "film5",
+    "title": "Je regarde",
+    "duration": "80 min",
+    "synopsis": "XXX",
+    "images": ["images/film5-1.jpg"]
+  }
+]
