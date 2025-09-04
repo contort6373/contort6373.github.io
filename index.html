@@ -5,87 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grégoire Benoist-Grandmaison</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      display: flex;
-      height: 100vh;
-    }
-    /* Colonne de gauche */
-    #movie-list {
-      width: 200px;
-      background: #f0f0f0;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    #movie-list ul {
-      list-style: none;
-      padding: 0;
-    }
-    #movie-list li {
-      margin: 10px 0;
-      cursor: pointer;
-      color: #007bff;
-    }
-    #movie-list li:hover {
-      text-decoration: underline;
-    }
-
-    /* Colonne de droite */
-    #movie-detail {
-      flex-grow: 1;
-      padding: 20px;
-    }
+    body { font-family: monospace, sans-serif; margin: 20px; }
+    h1 { font-size: 1.2em; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 6px 10px; border-bottom: 1px solid #ccc; }
+    tr:hover { background: #f5f5f5; cursor: pointer; }
+    #movie-detail { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    #movie-detail img { max-width: 150px; margin: 5px; }
   </style>
 </head>
 <body>
-  <!-- Liste des films -->
-  <div id="movie-list">
-    <ul>
-      <li onclick="showDetail('film1')">Au sein du monde</li>
-      <li onclick="showDetail('film2')">Vagabonds</li>
-      <li onclick="showDetail('film3')">Sous le vieux châtaignier</li>
-      <li onclick="showDetail('film4')">Village club</li>
-      <li onclick="showDetail('film5')">Je regarde</li>
-    </ul>
-  </div>
+  <h1>Index des /films/</h1>
+  <table id="film-table">
+    <thead>
+      <tr><th>Titre</th><th>Durée</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-  <!-- Détails -->
   <div id="movie-detail">
     <h2>Sélectionnez un film</h2>
-    <p>Le détail du film apparaîtra ici.</p>
+    <p>Le détail apparaîtra ici.</p>
   </div>
 
   <script>
-    const movieDetails = {
-      film1: {
-        title: "Au sein du monde",
-        description: "XXX"
-      },
-      film2: {
-        title: "Vagabonds",
-        description: "XXX"
-      },
-      film3: {
-        title: "Sous le vieux châtaignier",
-        description: "XXX"
-      },
-      film4: {
-        title: "Village club",
-        description: "XXX"
-      },
-      film5: {
-        title: "Je regarde",
-        description: "XXX"
-      }
-    };
+    let films = [];
 
-    function showDetail(movieKey) {
-      const detail = movieDetails[movieKey];
-      const container = document.getElementById('movie-detail');
+    fetch("films.json")
+      .then(res => res.json())
+      .then(data => {
+        films = data;
+        renderTable();
+      });
+
+    function renderTable() {
+      const tbody = document.querySelector("#film-table tbody");
+      tbody.innerHTML = "";
+      films.forEach(film => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${film.title}</td><td>${film.duration}</td>`;
+        tr.onclick = () => showDetail(film.id);
+        tbody.appendChild(tr);
+      });
+    }
+
+    function showDetail(filmId) {
+      const film = films.find(f => f.id === filmId);
+      const container = document.getElementById("movie-detail");
+
       container.innerHTML = `
-        <h2>${detail.title}</h2>
-        <p>${detail.description}</p>
+        <h2>${film.title}</h2>
+        <p><strong>Durée :</strong> ${film.duration}</p>
+        <p>${film.synopsis}</p>
+        <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
       `;
     }
   </script>
