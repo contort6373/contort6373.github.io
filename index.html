@@ -7,6 +7,14 @@
   <title>Grégoire Benoist-Grandmaison</title>
   <style>
     body { font-family: monospace, sans-serif; margin: 20px; font-size: 12px; }
+    .container {
+      max-width: 900px;   /* largeur max (lisible sur desktop) */
+      margin: 0 auto;     /* centre le contenu */
+      background: white;  /* optionnel : fond blanc */
+      padding: 20px;
+      border-radius: 8px; /* arrondis */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* ombre légère */
+    }
     h1 { font-size: 1.2em; }
     table { width: 100%; border-collapse: collapse; }
     th { text-align: left; font-weight: bold; }
@@ -17,6 +25,7 @@
   </style>
 </head>
 <body>
+  <div class="container">
   <h1>Index des /films/</h1>
   <table id="film-table">
     <thead>
@@ -26,7 +35,7 @@
   </table>
 
   <div id="movie-detail"></div>
-
+  </div>
   <script>
     let films = [];
 
