@@ -7,6 +7,7 @@
     "duration": "25 min",
     "synopsis": "Il part vivre dans la nature. Ce qu'il y trouve ? Rien n'a changé.",
     "images": ["images/film1-1.jpg", "images/film1-2.jpg"]
+    "themeColor": "#1f3b73"
   },
   {
     "id": "film2",
