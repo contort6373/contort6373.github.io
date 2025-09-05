@@ -10,10 +10,10 @@
     .container {
       max-width: 800px;   /* largeur max (lisible sur desktop) */
       margin: 0 auto;     /* centre le contenu */
-      /* background: white;  optionnel : fond blanc */
+      background: white;  /* optionnel : fond blanc */
       padding: 20px;
       border-radius: 8px; /* arrondis */
-      /* box-shadow: 0 2px 8px rgba(0,0,0,0.1); ombre légère */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* ombre légère */
     }
     h1 { font-size: 1.2em; }
     table { width: 100%; border-collapse: collapse; }
@@ -29,7 +29,7 @@
   <h1>Index des /films/</h1>
   <table id="film-table">
     <thead>
-      <tr><th>Titre</th><th>Année</th><th>Durée</th></tr>
+      <tr><th></th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -51,7 +51,7 @@
       tbody.innerHTML = "";
       films.forEach(film => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${film.title}</td><td>${film.annee}</td><td>${film.duration}</td>`;
+        tr.innerHTML = `<td>${film.title}</td>`;
         tr.onclick = () => showDetail(film.id);
         tbody.appendChild(tr);
       });
