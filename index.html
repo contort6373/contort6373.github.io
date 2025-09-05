@@ -56,7 +56,7 @@
 
       container.innerHTML = `
         <h2>${film.title}</h2>
-        <p><strong>Durée :</strong> ${film.duration}</p>
+        <p><strong>Durée :</strong> ${film.duration} | <strong>Genre :</strong> ${film.type}</p>
         <p>${film.synopsis}</p>
         <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
       `;
