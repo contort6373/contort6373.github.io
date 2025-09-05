@@ -2,30 +2,34 @@
   {
     "id": "film1",
     "title": "Au sein du monde",
+    "type" : "Fiction",
     "annee" : "2018",
     "duration": "25 min",
-    "synopsis": "XXX",
+    "synopsis": "Il part vivre dans la nature. Ce qu'il y trouve ? Rien n'a changé.",
     "images": ["images/film1-1.jpg", "images/film1-2.jpg"]
   },
   {
     "id": "film2",
     "title": "Vagabonds",
-    "annee" : "2019",
+    "type" : "Fiction",
+    "annee" : "2020",
     "duration": "15 min",
-    "synopsis": "XXX",
+    "synopsis": "Un jeune-homme-sans-histoire suit le fabuleux vagabond à la recherche de son palais oublié. Là où tous ses souvenirs sont enfouis dans des tiroirs poussiéreux.",
     "images": ["images/film2-1.jpg"]
   },
   {
     "id": "film3",
     "title": "Sous le vieux châtaignier",
+    "type" : "Fiction",
     "annee" : "2022",
     "duration": "20 min",
-    "synopsis": "XXX",
+    "synopsis": "Grand-père est mort. Il faut faire quelque chose, Jeanne propose d’aller déterrer son corps pour l’enterrer sous le vieux châtaignier.",
     "images": ["images/film3-1.jpg"]
   },
   {
     "id": "film4",
     "title": "Village club",
+    "type" : "Documentaire",
     "annee" : "2024",
     "duration": "18 min",
     "synopsis": "XXX",
@@ -34,9 +38,10 @@
   {
     "id": "film5",
     "title": "Je regarde",
+    "type" : "Fiction, Documentaire",
     "annee" : "2025",
     "duration": "95 min",
-    "synopsis": "XXX",
+    "synopsis": "En avril 2025, j'ai suivi le temps d'un week-end deux acteurs qui préparaient leur rôle de peintre.",
     "images": ["images/film5-1.jpg"]
   }
 ]
