@@ -22,7 +22,20 @@
     tr:hover { background: #f5f5f5; cursor: pointer; }
     #movie-detail { display: none; margin-top: 20px; padding: 10px; line-height: 1.6; /* border: 1px solid #ccc; */ }
     #movie-detail p { line-height: 1.6; /* augmente l'espace entre les lignes */ }
-    #movie-detail img { max-width: 150px; margin: 5px; display: inline-block;}
+    #movie-detail div {
+      display: flex;
+      flex-wrap: wrap; /* Permet aux images de passer à la ligne */
+      gap: 10px; /* Espace entre les images */
+      justify-content: center; /* Centrer les images */
+    }
+    #movie-detail img {
+      flex: 1 1 200px; /* base = 200px, mais peut s’élargir ou se réduire */
+      min-width: 150px; /* ne devient jamais plus petit que ça */
+      width: 100%; /* occupe toute la largeur possible dans sa "case" */
+      height: auto;
+      border-radius: 6px;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
