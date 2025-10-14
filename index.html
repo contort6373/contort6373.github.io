@@ -69,6 +69,10 @@
         <p>${film.synopsis}</p>
         <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
       `;
+      
+      console.log(film.images);
+      console.log(Array.isArray(film.images));
+      
     }
   </script>
 </body>
