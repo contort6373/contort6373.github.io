@@ -6,7 +6,7 @@
     "annee" : "2018",
     "duration": "25 min",
     "synopsis": "Il part vivre dans la nature. Ce qu'il y trouve ? Rien n'a changé.",
-    "images": ["images/film1-1.jpg", "images/film1-2.jpg"]
+    "images": ["images/film1-1.jpg", "images/film1-2.jpg", "images/film1-3.jpg"]
   },
   {
     "id": "film2",
@@ -15,7 +15,7 @@
     "annee" : "2020",
     "duration": "15 min",
     "synopsis": "Un jeune-homme-sans-histoire suit le fabuleux vagabond à la recherche de son palais oublié. Là où tous ses souvenirs sont enfouis dans des tiroirs poussiéreux.",
-    "images": ["images/film2-1.jpg"]
+    "images": ["images/film2-1.jpg", "images/film2-2.jpg", "images/film2-3.jpg"]
   },
   {
     "id": "film3",
@@ -33,7 +33,7 @@
     "annee" : "2024",
     "duration": "18 min",
     "synopsis": "Sur la côte vendéenne, la vie d'un village vacances associatif en août. Derrière le tumulte des reportages télévisuels, en scrutant les lieux, un autre rythme surgit.",
-    "images": ["images/film4-1.jpg"]
+    "images": ["images/film4-1.jpg", "images/film4-2.jpg", "images/film4-3.jpg"]
   },
   {
     "id": "film5",
