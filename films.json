@@ -24,7 +24,7 @@
     "annee" : "2022",
     "duration": "20 min",
     "synopsis": "Grand-père est mort. Il faut faire quelque chose, Jeanne propose d’aller déterrer son corps pour l’enterrer sous le vieux châtaignier.",
-    "images": ["images/film3-1.jpg"]
+    "images": ["images/film3-1.jpg", "images/film3-2.jpg", "images/film3-3.jpg"]
   },
   {
     "id": "film4",
