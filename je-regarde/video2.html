@@ -55,25 +55,59 @@
 
   <!-- Shaka Player via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.compiled.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const video = document.getElementById('video');
-      const player = new shaka.Player(video);
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const video = document.getElementById('video');
+  const player = new shaka.Player(video);
 
-      // Détecter les erreurs
-      player.addEventListener('error', (event) => {
-        console.error('Shaka Player error', event.detail);
-        document.querySelector('.hint').textContent =
-          "Impossible de lire la vidéo avec Shaka Player.";
-      });
+  // Détecter les erreurs
+  player.addEventListener('error', (event) => {
+    console.error('Shaka Player error', event.detail);
+    document.querySelector('.hint').textContent =
+      "Impossible de lire la vidéo avec Shaka Player.";
+  });
 
-      // Charger le DASH ou HLS
-      const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-2/jeregarde.mpd"; // DASH
-      player.load(manifestUri).then(() => {
-        console.log('Lecture DASH prête !');
-      }).catch(err => console.error('Erreur lors du chargement du manifeste', err));
+  // Activer l’adaptive bitrate automatique
+  player.configure({
+    abr: {
+      enabled: true,       // active l’ABR automatique
+      defaultBandwidthEstimate: 5000000 // estimation initiale en bits/s (5 Mbps)
+    }
+  });
+
+  // Charger le DASH
+  const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-2/jeregarde.mpd";
+  player.load(manifestUri).then(() => {
+    console.log('Lecture DASH prête !');
+
+    // Créer un menu de sélection de qualité
+    const qualitySelect = document.createElement('select');
+    qualitySelect.style.marginTop = '12px';
+    video.parentNode.appendChild(qualitySelect);
+
+    // Récupérer les pistes vidéo disponibles
+    const tracks = player.getVariantTracks().filter(t => t.type === 'video');
+
+    // Ajouter une option pour chaque bitrate
+    tracks.forEach(track => {
+      const option = document.createElement('option');
+      option.value = track.id;
+      option.textContent = `${track.height}p - ${Math.round(track.bandwidth/1000)} kbps`;
+      qualitySelect.appendChild(option);
+    });
+
+    // Gestion du changement de qualité par l’utilisateur
+    qualitySelect.addEventListener('change', (e) => {
+      const selectedId = parseInt(e.target.value);
+      const selectedTrack = tracks.find(t => t.id === selectedId);
+      if (selectedTrack) {
+        // Désactive l’ABR pour forcer le choix manuel
+        player.configure({ abr: { enabled: false } });
+        player.selectVariantTrack(selectedTrack, /* clearBuffer */ true);
       }
     });
-  </script>
+  }).catch(err => console.error('Erreur lors du chargement du manifeste', err));
+});
+</script>
 </body>
 </html>
