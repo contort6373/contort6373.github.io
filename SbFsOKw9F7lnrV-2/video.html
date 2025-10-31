@@ -4,47 +4,85 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow">
-  <title>Pashmi mange</title>
+  <title>Pashmi</title>
   <style>
-    html,body{margin:0;height:100%;background:#0b0b0b;color:#eaeaea;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .wrap{min-height:100%;display:grid;place-items:center;padding:16px}
-    video{width:min(100vw, 960px);height:auto;max-height:90vh;background:#000;border-radius:12px}
-    .hint{opacity:.7;font-size:.9rem;margin-top:8px;text-align:center}
+    html,body {
+      margin:0;
+      height:100%;
+      background:#0b0b0b;
+      color:#eaeaea;
+      font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    }
+    .wrap {
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:16px;
+    }
+    video {
+      width:min(100vw, 960px);
+      height:auto;
+      max-height:90vh;
+      background:#000;
+      border-radius:12px;
+    }
+    .hint {
+      opacity:.7;
+      font-size:.9rem;
+      margin-top:8px;
+      text-align:center;
+    }
+    #download-btn {
+      display:inline-block;
+      padding:8px 16px;
+      background:#1a73e8;
+      color:white;
+      border-radius:6px;
+      text-decoration:none;
+      margin-top:12px;
+      font-weight:bold;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div>
       <video id="video" controls playsinline preload="metadata"></video>
-      <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à porter de main 👀) !</div>
+      <div class="hint">Si le film ne se charge pas, contactez-moi !</div>
     </div>
   </div>
 
-  <!-- hls.js via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    // ↓↓↓ Remplace cette URL par la tienne ↓↓↓
-    const M3U8_URL = "https://gbg.s3.gra.io.cloud.ovh.net/Pashmi/Pashmi-mange.m3u8";
+  <!-- Shaka Player via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.compiled.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const video = document.getElementById('video');
+  const player = new shaka.Player(video);
 
-    const video = document.getElementById('video');
+  // Handle errors
+  player.addEventListener('error', (event) => {
+    console.error('Shaka Player error', event.detail);
+    document.querySelector('.hint').textContent = "Impossible de lire la vidéo avec Shaka Player.";
+  });
 
-    // Chrome/Firefox/Edge : hls.js
-    if (window.Hls && Hls.isSupported()) {
-      const hls = new Hls({ enableWorker: true });
-      hls.loadSource(M3U8_URL);
-      hls.attachMedia(video);
-      // Optionnel : auto-play si autorisé par le navigateur
-      // video.muted = true; video.play().catch(()=>{});
-    } 
-    // Safari/iOS : HLS natif
-    else if (video.canPlayType('application/vnd.apple.mpegURL')) {
-      video.src = M3U8_URL;
-      // video.play().catch(()=>{});
-    } 
-    else {
-      document.querySelector('.hint').textContent =
-        "Votre navigateur ne supporte pas HLS et hls.js est indisponible.";
-    }
-  </script>
+  // Disable adaptive bitrate completely
+  player.configure({
+    abr: { enabled: false }
+  });
+
+  // Load DASH manifest
+  const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Pashmi/pashmi-mange.mpd";
+
+  player.load(manifestUri).then(() => {
+    console.log('Lecture DASH prête !');
+    // Optionally, you could pick a single track manually if you want:
+    // const tracks = player.getVariantTracks().filter(t => t.type === 'video');
+    // const track = tracks.find(t => t.height === 720); // for example
+    // if (track) player.selectVariantTrack(track, true);
+  }).catch(err => console.error('Erreur lors du chargement du manifeste', err));
+});
+</script>
+
 </body>
 </html>
