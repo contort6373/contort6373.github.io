@@ -50,7 +50,7 @@
     <div>
       <video id="video" controls playsinline preload="metadata"></video>
       <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à porter de main 👀) !</div>
-      <a id="download-btn" href="https://gbg.s3.gra.io.cloud.ovh.net/Miro-2/_MIRO-V4-Apple ProRes 422-HD 1080p" download>Télécharger la vidéo originale</a>
+      <a id="download-btn" href="https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/_MIRO-V4-Apple-ProRes-422-HD-1080p-HD 1080p.mov" download>Télécharger la vidéo originale</a>
     </div>
   </div>
 
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Charger le DASH
-  const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-2/jeregarde.mpd";
+  const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/je-regarde.mpd";
   player.load(manifestUri).then(() => {
     console.log('Lecture DASH prête !');
 
