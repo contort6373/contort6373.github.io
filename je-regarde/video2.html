@@ -5,110 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow">
   <title>Je regarde</title>
+
+  <!-- ✅ Styles de base -->
   <style>
-    html,body {
-      margin:0;
-      height:100%;
-      background:#0b0b0b;
-      color:#eaeaea;
-      font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #0b0b0b;
+      color: #eaeaea;
+      font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial;
     }
     .wrap {
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      text-align:center;
-      padding:16px;
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
     }
     video {
-      width:min(100vw, 960px);
-      height:auto;
-      max-height:90vh;
-      background:#000;
-      border-radius:12px;
+      width: min(100vw, 960px);
+      height: auto;
+      max-height: 90vh;
+      background: #000;
+      border-radius: 12px;
     }
     .hint {
-      opacity:.7;
-      font-size:.9rem;
-      margin-top:8px;
-      text-align:center;
+      opacity: .7;
+      font-size: .9rem;
+      margin-top: 8px;
+      text-align: center;
     }
     #download-btn {
-      display:inline-block;
-      padding:8px 16px;
-      background:#1a73e8;
-      color:white;
-      border-radius:6px;
-      text-decoration:none;
-      margin-top:12px;
-      font-weight:bold;
+      display: inline-block;
+      padding: 8px 16px;
+      background: #1a73e8;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 12px;
+      font-weight: bold;
     }
   </style>
+
+  <!-- ✅ Feuilles de style Shaka UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/controls.css">
 </head>
+
 <body>
   <div class="wrap">
     <div>
-      <video id="video" controls playsinline preload="metadata"></video>
-      <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à porter de main 👀) !</div>
-      <a id="download-btn" href="https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/_MIRO-V4-Apple-ProRes-422-HD-1080p-HD 1080p.mov" download>Télécharger la vidéo originale</a>
+      <!-- ✅ L’attribut "data-shaka-player-container" active l’UI Shaka -->
+      <div data-shaka-player-container style="width:min(100vw,960px);">
+        <video id="video"
+               data-shaka-player
+               autoplay
+               muted
+               playsinline
+               preload="metadata"></video>
+      </div>
+
+      <div class="hint">
+        Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à portée de main 👀) !
+      </div>
+
+      <a id="download-btn"
+         href="https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/_MIRO-V4-Apple-ProRes-422-HD-1080p-HD 1080p.mov"
+         download>
+         Télécharger la vidéo originale
+      </a>
     </div>
   </div>
 
-  <!-- Shaka Player via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.compiled.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const video = document.getElementById('video');
-  const player = new shaka.Player(video);
+  <!-- ✅ Shaka Player avec UI intégrée -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.ui.js"></script>
 
-  // Détecter les erreurs
-  player.addEventListener('error', (event) => {
-    console.error('Shaka Player error', event.detail);
-    document.querySelector('.hint').textContent =
-      "Impossible de lire la vidéo avec Shaka Player.";
-  });
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const video = document.getElementById('video');
+    const ui = video['ui'];
+    const controls = ui.getControls();
+    const player = controls.getPlayer();
 
-  // Activer l’adaptive bitrate automatique
-  player.configure({
-    abr: {
-      enabled: true,       // active l’ABR automatique
-      defaultBandwidthEstimate: 5000000 // estimation initiale en bits/s (5 Mbps)
-    }
-  });
-
-  // Charger le DASH
-  const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/je-regarde.mpd";
-  player.load(manifestUri).then(() => {
-    console.log('Lecture DASH prête !');
-
-    // Créer un menu de sélection de qualité
-    const qualitySelect = document.createElement('select');
-    qualitySelect.style.marginTop = '12px';
-    video.parentNode.appendChild(qualitySelect);
-
-    // Récupérer les pistes vidéo disponibles
-    const tracks = player.getVariantTracks().filter(t => t.type === 'video');
-
-    // Ajouter une option pour chaque bitrate
-    tracks.forEach(track => {
-      const option = document.createElement('option');
-      option.value = track.id;
-      option.textContent = `${track.height}p - ${Math.round(track.bandwidth/1000)} kbps`;
-      qualitySelect.appendChild(option);
-    });
-
-    // Gestion du changement de qualité par l’utilisateur
-    qualitySelect.addEventListener('change', (e) => {
-      const selectedId = parseInt(e.target.value);
-      const selectedTrack = tracks.find(t => t.id === selectedId);
-      if (selectedTrack) {
-        // Désactive l’ABR pour forcer le choix manuel
-        player.configure({ abr: { enabled: false } });
-        player.selectVariantTrack(selectedTrack, /* clearBuffer */ true);
+    // 🔧 Configuration du lecteur
+    player.configure({
+      abr: {
+        enabled: true,
+        defaultBandwidthEstimate: 5000000 // 5 Mbps estimation initiale
       }
     });
-  }).catch(err => console.error('Erreur lors du chargement du manifeste', err));
-});
-</script>
+
+    // 🎛️ Configuration des contrôles visibles
+    ui.configure({
+      controlPanelElements: [
+        'play_pause', 'time_and_duration', 'mute', 'volume',
+        'spacer', 'quality', 'captions', 'fullscreen'
+      ],
+      addBigPlayButton: true
+    });
+
+    // 🌐 Charger la vidéo DASH
+    const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-Je-regarde/je-regarde.mpd";
+
+    try {
+      await player.load(manifestUri);
+      console.log('Lecture DASH prête !');
+    } catch (err) {
+      console.error('Erreur Shaka Player', err);
+      document.querySelector('.hint').textContent =
+        "Impossible de lire la vidéo avec Shaka Player.";
+    }
+  });
+  </script>
 </body>
 </html>
