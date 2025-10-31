@@ -1,2 +1,79 @@
-te
-st
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Je regarde</title>
+  <style>
+    html,body {
+      margin:0;
+      height:100%;
+      background:#0b0b0b;
+      color:#eaeaea;
+      font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    }
+    .wrap {
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:16px;
+    }
+    video {
+      width:min(100vw, 960px);
+      height:auto;
+      max-height:90vh;
+      background:#000;
+      border-radius:12px;
+    }
+    .hint {
+      opacity:.7;
+      font-size:.9rem;
+      margin-top:8px;
+      text-align:center;
+    }
+    #download-btn {
+      display:inline-block;
+      padding:8px 16px;
+      background:#1a73e8;
+      color:white;
+      border-radius:6px;
+      text-decoration:none;
+      margin-top:12px;
+      font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <video id="video" controls playsinline preload="metadata"></video>
+      <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à porter de main 👀) !</div>
+      <a id="download-btn" href="https://gbg.s3.gra.io.cloud.ovh.net/Miro/MIRO-2-2-HD-1080p.MOV" download>Télécharger la vidéo originale</a>
+    </div>
+  </div>
+
+  <!-- Shaka Player via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.compiled.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      // Détecter les erreurs
+      player.addEventListener('error', (event) => {
+        console.error('Shaka Player error', event.detail);
+        document.querySelector('.hint').textContent =
+          "Impossible de lire la vidéo avec Shaka Player.";
+      });
+
+      // Charger le DASH ou HLS
+      const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/Miro-2/jeregarde.mpd"; // DASH
+      player.load(manifestUri).then(() => {
+        console.log('Lecture DASH prête !');
+      }).catch(err => console.error('Erreur lors du chargement du manifeste', err));
+      }
+    });
+  </script>
+</body>
+</html>
