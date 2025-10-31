@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Village club</title>
+  <style>
+    html,body {
+      margin: 0;
+      height: 100%;
+      background: #0b0b0b;
+      color: #eaeaea;
+      font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    .wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+    video {
+      width: min(100vw, 960px);
+      height: auto;
+      max-height: 90vh;
+      background: #000;
+      border-radius: 12px;
+    }
+    .hint {
+      opacity: .7;
+      font-size: .9rem;
+      margin-top: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <!-- ↓↓↓ Remplace cette URL par la tienne ↓↓↓ -->
+      <video id="video" controls playsinline preload="metadata" src="https://gbg.s3.gra.io.cloud.ovh.net/Pashmi-mange.MOV">
+        Votre navigateur ne supporte pas la lecture vidéo.
+      </video>
+      <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage (sans téléphone à portée de main 👀) !</div>
+    </div>
+  </div>
+</body>
+</html>
