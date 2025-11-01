@@ -5,46 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow">
   <title>Village club</title>
+
+  <!-- ✅ Styles de base -->
   <style>
-    html,body{margin:0;height:100%;background:#0b0b0b;color:#eaeaea;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .wrap{min-height:100%;display:grid;place-items:center;padding:16px}
-    video{width:min(100vw, 960px);height:auto;max-height:90vh;background:#000;border-radius:12px}
-    .hint{opacity:.7;font-size:.9rem;margin-top:8px;text-align:center}
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #0b0b0b;
+      color: #eaeaea;
+      font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    .wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+    video {
+      width: min(100vw, 960px);
+      height: auto;
+      max-height: 90vh;
+      background: #000;
+      border-radius: 12px;
+    }
+    .hint {
+      opacity: .7;
+      font-size: .9rem;
+      margin-top: 8px;
+      text-align: center;
+    }
+    #download-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #1a73e8;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 12px;
+      font-weight: bold;
+    }
   </style>
+
+  <!-- ✅ Feuilles de style Shaka UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/controls.css">
 </head>
+
 <body>
   <div class="wrap">
     <div>
-      <video id="video" controls playsinline preload="metadata"></video>
-      <div class="hint">Si le film ne se charge pas, contactez-moi. Bon visionnage !</div>
+      <!-- ✅ L’attribut "data-shaka-player-container" active l’UI Shaka -->
+      <div data-shaka-player-container style="width:min(100vw,960px);">
+        <video id="video"
+               data-shaka-player
+               autoplay
+               muted
+               playsinline
+               preload="metadata"></video>
+      </div>
+
+      <div class="hint">
+        Si le film ne se charge pas, contactez-moi. Bon visionnage !
+      </div>
+
     </div>
   </div>
 
-  <!-- hls.js via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <!-- ✅ Shaka Player avec UI intégrée -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.ui.js"></script>
+
   <script>
-    // ↓↓↓ Remplace cette URL par la tienne ↓↓↓
-    const M3U8_URL = "https://gbg.s3.gra.io.cloud.ovh.net/VC/VILLAGE-CLUB-4K.m3u8";
-
+  document.addEventListener('DOMContentLoaded', async () => {
     const video = document.getElementById('video');
+    const ui = video['ui'];
+    const controls = ui.getControls();
+    const player = controls.getPlayer();
 
-    // Chrome/Firefox/Edge : hls.js
-    if (window.Hls && Hls.isSupported()) {
-      const hls = new Hls({ enableWorker: true });
-      hls.loadSource(M3U8_URL);
-      hls.attachMedia(video);
-      // Optionnel : auto-play si autorisé par le navigateur
-      // video.muted = true; video.play().catch(()=>{});
-    } 
-    // Safari/iOS : HLS natif
-    else if (video.canPlayType('application/vnd.apple.mpegURL')) {
-      video.src = M3U8_URL;
-      // video.play().catch(()=>{});
-    } 
-    else {
+    // 🔧 Configuration du lecteur
+    player.configure({
+      abr: {
+        enabled: true,
+        defaultBandwidthEstimate: 5000000 // 5 Mbps estimation initiale
+      }
+    });
+
+    // 🎛️ Configuration des contrôles visibles
+    ui.configure({
+      controlPanelElements: [
+        'play_pause', 'time_and_duration', 'mute', 'volume',
+        'spacer', 'quality', 'captions', 'fullscreen'
+      ],
+      addBigPlayButton: true
+    });
+
+    // 🌐 Charger la vidéo DASH
+    const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/VC-2/village-club.mpd";
+
+    try {
+      await player.load(manifestUri);
+      console.log('Lecture DASH prête !');
+    } catch (err) {
+      console.error('Erreur Shaka Player', err);
       document.querySelector('.hint').textContent =
-        "Votre navigateur ne supporte pas HLS et hls.js est indisponible.";
+        "Impossible de lire la vidéo avec Shaka Player.";
     }
+  });
   </script>
 </body>
 </html>
