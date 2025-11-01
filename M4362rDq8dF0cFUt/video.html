@@ -6,7 +6,6 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Village club</title>
 
-  <!-- ✅ Styles de base -->
   <style>
     html, body {
       margin: 0;
@@ -35,26 +34,16 @@
       margin-top: 8px;
       text-align: center;
     }
-    #download-btn {
-      display: inline-block;
-      padding: 8px 16px;
-      background: #1a73e8;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-top: 12px;
-      font-weight: bold;
-    }
   </style>
 
-  <!-- ✅ Feuilles de style Shaka UI -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/controls.css">
+  <!-- ✅ CSS de Shaka UI -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/controls.css">
 </head>
 
 <body>
   <div class="wrap">
     <div>
-      <!-- ✅ L’attribut "data-shaka-player-container" active l’UI Shaka -->
       <div data-shaka-player-container style="width:min(100vw,960px);">
         <video id="video"
                data-shaka-player
@@ -67,21 +56,20 @@
       <div class="hint">
         Si le film ne se charge pas, contactez-moi. Bon visionnage !
       </div>
-
     </div>
   </div>
 
-  <!-- ✅ Shaka Player avec UI intégrée -->
+  <!-- ✅ Script Shaka UI -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.1/shaka-player.ui.js"></script>
 
   <script>
-  document.addEventListener('DOMContentLoaded', async () => {
+  document.addEventListener('shaka-ui-loaded', async () => {
     const video = document.getElementById('video');
     const ui = video['ui'];
     const controls = ui.getControls();
     const player = controls.getPlayer();
 
-    // 🔧 Configuration du lecteur
+    // Configuration du lecteur
     player.configure({
       abr: {
         enabled: true,
@@ -89,7 +77,7 @@
       }
     });
 
-    // 🎛️ Configuration des contrôles visibles
+    // Configuration des contrôles visibles
     ui.configure({
       controlPanelElements: [
         'play_pause', 'time_and_duration', 'mute', 'volume',
@@ -98,7 +86,7 @@
       addBigPlayButton: true
     });
 
-    // 🌐 Charger la vidéo DASH
+    // Charger la vidéo DASH
     const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/VC-2/village-club.mpd";
 
     try {
@@ -109,6 +97,12 @@
       document.querySelector('.hint').textContent =
         "Impossible de lire la vidéo avec Shaka Player.";
     }
+  });
+
+  document.addEventListener('shaka-ui-load-failed', () => {
+    console.error('Shaka UI n’a pas pu se charger.');
+    document.querySelector('.hint').textContent =
+      "Erreur lors du chargement du lecteur vidéo.";
   });
   </script>
 </body>
