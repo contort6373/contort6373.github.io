@@ -34,6 +34,31 @@
       margin-top: 8px;
       text-align: center;
     }
+
+    .player-container {
+  width: min(100vw, 960px);
+  margin: 0 auto;
+  transition: width 0.3s;
+}
+
+.player-container:fullscreen,
+.player-container:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-container:fullscreen video,
+.player-container:-webkit-full-screen video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
   </style>
 
   <!-- ✅ CSS de Shaka UI -->
@@ -44,7 +69,7 @@
 <body>
   <div class="wrap">
     <div>
-      <div data-shaka-player-container style="width:min(100vw,960px);">
+      <div data-shaka-player-container class="player-container"">
         <video id="video"
                data-shaka-player
                autoplay
