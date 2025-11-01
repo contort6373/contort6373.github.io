@@ -98,7 +98,7 @@
     player.configure({
       abr: {
         enabled: true,
-        defaultBandwidthEstimate: 5000000 // 5 Mbps estimation initiale
+        defaultBandwidthEstimate: 10000000 // 5 Mbps estimation initiale
       }
     });
 
@@ -108,7 +108,7 @@
         'play_pause', 'time_and_duration', 'mute', 'volume',
         'spacer', 'quality', 'captions', 'fullscreen'
       ],
-      addBigPlayButton: true
+      addBigPlayButton: true,
       fullscreenElement: document.getElementById('video')
     });
 
