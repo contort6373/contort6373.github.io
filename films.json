@@ -41,7 +41,8 @@
     "type" : "Fiction, Documentaire",
     "annee" : "2025",
     "duration": "95 min",
+    "acteurices" : "Lara Headley et Kervens St Fort",
     "synopsis": "En avril 2025, le temps d'un week-end, j'ai suivi deux jeunes acteurs. Ils avaiaent décidé de préparer ensemble leurs prochains rôles.",
-    "images": ["images/film5-1.jpg", "images/film5-2.jpg", "images/film5-3.jpg"]
+    "images": ["images/affiche-miro-vfinal-avec-credit.jpg", "images/film5-1.jpg", "images/film5-2.jpg", "images/film5-3.jpg"]
   }
 ]
