@@ -57,6 +57,7 @@
       .then(data => {
         films = data;
         renderTable();
+        handleHashOnLoad();
       });
 
     function renderTable() {
@@ -70,23 +71,42 @@
       });
     }
 
-    function showDetail(filmId) {
-      const film = films.find(f => f.id === filmId);
-      const container = document.getElementById("movie-detail");
+function showDetail(filmId) {
+  const film = films.find(f => f.id === filmId);
+  const container = document.getElementById("movie-detail");
+  container.style.display = "block";
+  container.innerHTML = `
+    <h2 id="${film.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}">${film.title}</h2>
+    <p><strong>${film.annee}</strong> | <strong>Durée :</strong> ${film.duration} | <strong>Genre :</strong> ${film.type}</p>
+    <p>${film.synopsis}</p>
+    <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
+  `;
 
-      container.style.display = "block";
+  // Met à jour l'URL avec le hash
+  const slug = film.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  history.pushState({ filmId }, '', `#${slug}`);
+}
 
-      container.innerHTML = `
-        <h2>${film.title}</h2>
-        <p><strong>${film.annee}</strong> | <strong>Durée :</strong> ${film.duration} | <strong>Genre :</strong> ${film.type}</p>
-        <p>${film.synopsis}</p>
-        <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
-      `;
-      
-      console.log(film.images);
-      console.log(Array.isArray(film.images));
-      
-    }
+// Gère le bouton retour du navigateur
+window.addEventListener('popstate', (e) => {
+  if (e.state?.filmId) {
+    showDetail(e.state.filmId);
+  } else {
+    document.getElementById("movie-detail").style.display = "none";
+  }
+});
+
+// Charge le film au chargement si un hash est présent dans l'URL
+function handleHashOnLoad() {
+  const hash = window.location.hash.slice(1);
+  if (hash && films.length) {
+    const slug = hash;
+    const film = films.find(f =>
+      f.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug
+    );
+    if (film) showDetail(film.id);
+  }
+}
   </script>
 </body>
 </html>
