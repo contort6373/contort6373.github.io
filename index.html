@@ -78,7 +78,7 @@ function showDetail(filmId) {
   container.innerHTML = `
     <h2 id="${film.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}">${film.title}</h2>
     <p><strong>${film.annee}</strong> | <strong>Durée :</strong> ${film.duration} | <strong>Genre :</strong> ${film.type}</p>
-    <p>${film.synopsis}</p>
+    <p>${film.synopsis}</p> | <p>${film.acteurices}</p>
     <div>${film.images.map(img => `<img src="${img}" alt="${film.title}">`).join("")}</div>
   `;
 
