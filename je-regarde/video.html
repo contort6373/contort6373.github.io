@@ -85,9 +85,6 @@
 <body>
   <div class="wrap">
     <div>
-      <div class="hint">
-        Le film n'est pas encore mixé | Movie has no sound mixing yet
-      </div>
       <div data-shaka-player-container class="player-container">
         <video id="video"
                data-shaka-player
@@ -97,10 +94,11 @@
                preload="metadata"></video>
       </div>
       <a id="download-btn"
-        href="https://gbg.s3.gra.io.cloud.ovh.net/MIRO-3/_MIRO-3_1-etalo-HD 1080p.mov"
+        href="https://gbg.s3.gra.io.cloud.ovh.net/MIRO-4/_MIRO-3_2-generique-HD 1080p-SST-burn-EN.mp4"
         download>
          Télécharger le fichier
-      </a>c      <div class="hint">
+      </a>
+      <div class="hint">
         Le lecteur ne fonctionne pas avec la version iOS de Safari.<br>Si le film ne se charge pas, contactez-moi. Bon visionnage !
       </div>
     </div>
@@ -131,7 +129,7 @@
       fullScreenElement: document.querySelector('[data-shaka-player-container]')
     });
 
-    const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/MIRO-3/je-regarde.mpd";
+    const manifestUri = "https://gbg.s3.gra.io.cloud.ovh.net/MIRO-4/je-regarde.mpd";
 
     try {
       await player.load(manifestUri);
